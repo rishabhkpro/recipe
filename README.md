@@ -21,3 +21,13 @@ It is always better to use virtual environment when working with Python tech sta
 ### Installing dependencies
 
 Execute `pip3 install -r requirements.txt` to install all dependenceis for this project
+
+### How to start the server
+
+- Execute below command to start fastapi server
+
+  `uvicorn app:app --reload`
+
+- Execute below command to see API contract in openAPI format.
+
+  `http://localhost:8000/docs#/`
