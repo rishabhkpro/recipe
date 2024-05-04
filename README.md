@@ -22,6 +22,12 @@ It is always better to use virtual environment when working with Python tech sta
 
 Execute `pip3 install -r requirements.txt` to install all dependenceis for this project
 
+### Run tests
+
+- Execute below command to run tests
+
+  `./run_unit_tests.sh`
+
 ### How to start the server
 
 - Execute below command to start fastapi server

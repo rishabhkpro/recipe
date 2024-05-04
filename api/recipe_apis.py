@@ -77,7 +77,7 @@ async def get_recipe(
 
     recipe_data = db.query(Recipe).filter(Recipe.id == recipe_id).first()
     if not recipe_data:
-        raise HTTPException(status_code=400, detail="Recipe not found")
+        raise HTTPException(status_code=404, detail="Recipe not found")
     recipe = RecipeResponseDto(
         recipe_id=recipe_data.id,
         recipe_name=recipe_data.recipe_name,
@@ -127,7 +127,7 @@ async def delete_recipe(
 ):
     recipe_data = db.query(Recipe).filter(Recipe.id == recipe_id).first()
     if not recipe_data:
-        raise HTTPException(status_code=400, detail="Recipe details not found")
+        raise HTTPException(status_code=404, detail="Recipe details not found")
 
     db.delete(recipe_data)
     db.commit()
