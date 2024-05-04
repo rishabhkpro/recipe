@@ -30,7 +30,6 @@ class RecipePostRequestDto(RecipeDto):
 
 
 class RecipePatchRequestDto(CamelModel):
-    recipe_name: Optional[str]
     recipe_type: Optional[Literal["veg", "non-veg"]]
     recipe_description: Optional[str]
     recipe_cuisine: Optional[Literal["Indian", "Italian", "Chinese"]]

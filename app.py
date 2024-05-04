@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from api import recipe_apis
+from database import Base, engine
 
 
 def start_app():
@@ -20,6 +21,8 @@ def start_app():
     )
     return fastapi_app
 
+
+Base.metadata.create_all(bind=engine)
 
 app = start_app()
 
