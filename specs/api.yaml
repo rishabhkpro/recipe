@@ -1,0 +1,299 @@
+openapi: 3.0.0
+info:
+  title: Recipe
+  description: Recipe API Services
+  contact:
+    name: Rishabh Kumar
+    email: rishabh.kumar94@outlook.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+paths:
+  /recipes/create:
+    post:
+      tags:
+        - recipeAPIs
+      summary: Create Recipe
+      operationId: create_recipe_recipes_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipePostRequestDto'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePostResponseBodyDto'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /recipes:
+    get:
+      tags:
+        - recipeAPIs
+      summary: Get Recipes
+      operationId: get_recipes_recipes_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipesGetResponse'
+  /recipes/{recipe_id}:
+    get:
+      tags:
+        - recipeAPIs
+      summary: Get Recipe
+      operationId: get_recipe_recipes__recipe_id__get
+      parameters:
+        - name: recipe_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Recipe Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeGetResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+        - recipeAPIs
+      summary: Update Recipe
+      operationId: update_recipe_recipes__recipe_id__patch
+      parameters:
+        - name: recipe_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Recipe Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipePatchRequestDto'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - recipeAPIs
+      summary: Delete Recipe
+      operationId: delete_recipe_recipes__recipe_id__delete
+      parameters:
+        - name: recipe_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Recipe Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RecipeGetResponse:
+      properties:
+        body:
+          $ref: '#/components/schemas/RecipeResponseDto'
+        msg:
+          type: string
+          title: Msg
+      type: object
+      required:
+        - body
+        - msg
+      title: RecipeGetResponse
+    RecipePatchRequestDto:
+      properties:
+        recipeType:
+          anyOf:
+            - type: string
+              enum:
+                - veg
+                - non-veg
+          title: Recipetype
+        recipeDescription:
+          anyOf:
+            - type: string
+          title: Recipedescription
+        recipeCuisine:
+          anyOf:
+            - type: string
+              enum:
+                - Indian
+                - Italian
+                - Chinese
+          title: Recipecuisine
+      type: object
+      required:
+        - recipeType
+        - recipeDescription
+        - recipeCuisine
+      title: RecipePatchRequestDto
+    RecipePostRequestDto:
+      properties:
+        recipeName:
+          type: string
+          title: Recipename
+        recipeType:
+          type: string
+          enum:
+            - veg
+            - non-veg
+          title: Recipetype
+        recipeDescription:
+          type: string
+          title: Recipedescription
+        recipeCuisine:
+          type: string
+          enum:
+            - Indian
+            - Italian
+            - Chinese
+          title: Recipecuisine
+      type: object
+      required:
+        - recipeName
+        - recipeType
+        - recipeDescription
+        - recipeCuisine
+      title: RecipePostRequestDto
+    RecipePostResponseBodyDto:
+      properties:
+        body:
+          $ref: '#/components/schemas/RecipeResponseDto'
+        msg:
+          type: string
+          title: Msg
+      type: object
+      required:
+        - body
+        - msg
+      title: RecipePostResponseBodyDto
+    RecipeResponseDto:
+      properties:
+        recipeName:
+          type: string
+          title: Recipename
+        recipeType:
+          type: string
+          enum:
+            - veg
+            - non-veg
+          title: Recipetype
+        recipeDescription:
+          type: string
+          title: Recipedescription
+        recipeCuisine:
+          type: string
+          enum:
+            - Indian
+            - Italian
+            - Chinese
+          title: Recipecuisine
+        recipeId:
+          type: integer
+          title: Recipeid
+      type: object
+      required:
+        - recipeName
+        - recipeType
+        - recipeDescription
+        - recipeCuisine
+        - recipeId
+      title: RecipeResponseDto
+    RecipesGetResponse:
+      properties:
+        body:
+          items:
+            $ref: '#/components/schemas/RecipeResponseDto'
+          type: array
+          title: Body
+        msg:
+          type: string
+          title: Msg
+      type: object
+      required:
+        - body
+        - msg
+      title: RecipesGetResponse
+    SuccessResponse:
+      properties:
+        msg:
+          type: string
+          title: Msg
+      type: object
+      required:
+        - msg
+      title: SuccessResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError

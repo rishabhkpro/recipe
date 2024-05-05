@@ -28,11 +28,23 @@ Execute `pip3 install -r requirements.txt` to install all dependenceis for this 
 
   `./run_unit_tests.sh`
 
+### PostgreSQL setup.
+
+**Step 0**. Install docker by following [this](https://docs.docker.com/engine/install/) page
+
+**Step 1**. Execute below docker command to run postgres server
+
+`docker run -itd -e POSTGRES_USER=db_user_name -e POSTGRES_PASSWORD=password -p 5432:5432 -v ~/db:/var/lib/postgresql/data --name db_name postgres`
+
+**Step 2**. Connect to postgres with specified user name and password from the step 1.
+
+**Step 3**. Create database name(Same name should be used in `database.py` file). Current db name in database.py file is `recipe_db`.
+
 ### How to start the server
 
 - Execute below command to start fastapi server
 
-  `uvicorn app:app --reload`
+  `./run_app.sh`
 
 - Execute below command to see API contract in openAPI format.
 
